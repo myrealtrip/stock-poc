@@ -14,6 +14,9 @@ class DistributeLockAroundAspect(
     private val redissonClient: RedissonClient,
     private val distributeLockTransaction: DistributeLockTransactionProxy
 ){
+    companion object {
+        private const val REDISSON_LOCK_PREFIX = "LOCK:"
+    }
     @Around("@annotation(com.example.stockstudy.annotation.DistributeLock)")
     fun acquireDistributeLockAndCallMethod(joinPoint: ProceedingJoinPoint): Any? {
         val signature = joinPoint.signature as MethodSignature

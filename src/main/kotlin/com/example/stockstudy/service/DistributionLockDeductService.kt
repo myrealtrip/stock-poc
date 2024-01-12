@@ -13,7 +13,7 @@ class DistributionLockDeductService(
         return ServiceType.DISTRIBUTION == serviceType
     }
 
-    @DistributeLock("lock:stock:1")
+    @DistributeLock("1")
     override fun deduct(id: Long) {
         try {
             val stock = stockRepository.findById(1).get()
