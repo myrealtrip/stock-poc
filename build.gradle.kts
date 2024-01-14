@@ -28,6 +28,8 @@ dependencies {
     //redis
     implementation("org.redisson:redisson-spring-boot-starter:3.19.3")
 
+    implementation("org.flywaydb:flyway-core")
+
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

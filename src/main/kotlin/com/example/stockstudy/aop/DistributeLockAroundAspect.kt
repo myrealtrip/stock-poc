@@ -1,6 +1,6 @@
 package com.example.stockstudy.aop
 
-import com.example.stockstudy.annotation.DistributeLock
+import com.example.stockstudy.aop.annotation.DistributeLock
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -17,7 +17,8 @@ class DistributeLockAroundAspect(
     companion object {
         private const val REDISSON_LOCK_PREFIX = "LOCK:"
     }
-    @Around("@annotation(com.example.stockstudy.annotation.DistributeLock)")
+
+    @Around("@annotation(com.example.stockstudy.aop.annotation.DistributeLock)")
     fun acquireDistributeLockAndCallMethod(joinPoint: ProceedingJoinPoint): Any? {
         val signature = joinPoint.signature as MethodSignature
         val distributeLock = signature.method.getAnnotation(DistributeLock::class.java)

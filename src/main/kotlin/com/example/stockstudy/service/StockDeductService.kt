@@ -1,8 +1,9 @@
 package com.example.stockstudy.service
 
-import com.example.stockstudy.model.ServiceType
+import com.example.stockstudy.dto.DeductCommandDto
+import com.example.stockstudy.enums.ServiceType
 
 interface StockDeductService {
     fun supports(serviceType: ServiceType): Boolean
-    fun deduct(id: Long)
+    fun deduct(deductCommandDto: DeductCommandDto)
 }

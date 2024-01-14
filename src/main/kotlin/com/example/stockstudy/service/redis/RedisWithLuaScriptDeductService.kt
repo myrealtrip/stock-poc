@@ -1,13 +1,14 @@
-package com.example.stockstudy.service
+package com.example.stockstudy.service.redis
 
-import com.example.stockstudy.model.ServiceType
+import com.example.stockstudy.dto.DeductCommandDto
+import com.example.stockstudy.enums.ServiceType
+import com.example.stockstudy.service.StockDeductService
 import org.redisson.api.RScript
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Service
 
-/*
- * 남은 재고량을 redis에서 관리한다고 가정합니다
- * redis가 메모리 기반의 디비이기 때문에, 정확한 이력을 rdb에 남기기 위해서는 추가 작업이 필요할 수 있습니다.
+/***
+ * 남은 재고량을 Redis에서 관리하고 Redisson Lua Script를 사용하여 재고량을 감소시키는 서비스
  */
 @Service
 class RedisWithLuaScriptDeductService(
@@ -32,14 +33,19 @@ class RedisWithLuaScriptDeductService(
         return ServiceType.LUA == serviceType
     }
 
-    override fun deduct(id: Long) {
+    override fun deduct(deductCommandDto: DeductCommandDto) {
+        val stockKeys = deductCommandDto.ids.map {
+            "$stockKey:$it"
+        }
+
         val result = redissonClient.script.eval<Any>(
             RScript.Mode.READ_WRITE,
             luaScript,
             RScript.ReturnType.VALUE,
-            listOf(stockKey),
+            stockKeys,
             1
         )
+
         if (result == -1L) {
             println("재고가 부족합니다.")
         }
