@@ -10,7 +10,7 @@ REDIS 설정 : redis 7.0.8
 ---
 테스트 설정 : users: 200명, ramp-up: 10초, loop: 100회
 에러율 : 0.00%
-성능 결괴 : throughput 320.6개/초
+성능 결과 : throughput 320.6개/초
 ![img_2.png](img_2.png)
 ---
 테스트 설정 : users: 1000명, ramp-up: 10초, loop: 100회
